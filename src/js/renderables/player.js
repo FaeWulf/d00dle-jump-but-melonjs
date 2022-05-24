@@ -69,7 +69,7 @@ export default class PlayerEntity extends me.Sprite {
         }
 
         //remove jetpack effect
-        if(this.jetpacking && this.jump <= 0) {
+        if (this.jetpacking && this.jump <= 0) {
             me.audio.fade("jetpack", 1.0, 0.0, 1000)
             let jetpackParticle = new jetpack(this.pos.x, this.pos.y)
             me.game.world.addChild(jetpackParticle)
@@ -80,8 +80,8 @@ export default class PlayerEntity extends me.Sprite {
         }
 
 
-        if (this.jump > 0){
-            if(this.jetpacking)
+        if (this.jump > 0) {
+            if (this.jetpacking)
                 this.setCurrentAnimation("jetpack")
             else
                 this.setCurrentAnimation("jump")
@@ -103,11 +103,10 @@ export default class PlayerEntity extends me.Sprite {
 
                 children.forEach(E => {
                     if (
-                           E.body?.collisionType === me.collision.types.WORLD_SHAPE 
+                        E.body?.collisionType === me.collision.types.WORLD_SHAPE
                         || E.body?.collisionType === me.collision.types.COLLECTABLE_OBJECT
                         || E.body?.collisionType === me.collision.types.NPC_OBJECT
-                        ) 
-                    {
+                    ) {
                         E.pos.y += this.jump * time / 1000;
                     }
                 })
@@ -118,7 +117,7 @@ export default class PlayerEntity extends me.Sprite {
                         this.spawnPlatform()
                     }
                     else
-                        if (children[i].body?.collisionType === me.collision.types.COLLECTABLE_OBJECT && children[i].pos.y > me.game.viewport.height) {
+                        if ((children[i].body?.collisionType === me.collision.types.COLLECTABLE_OBJECT || children[i].body?.collisionType === me.collision.types.NPC_OBJECT) && children[i].pos.y > me.game.viewport.height) {
                             me.game.world.removeChild(children[i])
                         }
                 }
@@ -161,18 +160,18 @@ export default class PlayerEntity extends me.Sprite {
       */
     onCollision(response, other) {
 
-        if(this.stun) {
+        if (this.stun) {
             return false
         }
 
-        if (other.body.collisionType == me.collision.types.NPC_OBJECT && !this.jetpacking) { 
+        if (other.body.collisionType == me.collision.types.NPC_OBJECT && !this.jetpacking) {
             this.stun = true
             me.audio.play("stun", false, undefined, 0.5)
             this.setCurrentAnimation("stun")
             return false
         }
         // Make all other objects solid
-        if (other.body.collisionType == me.collision.types.COLLECTABLE_OBJECT ) {
+        if (other.body.collisionType == me.collision.types.COLLECTABLE_OBJECT) {
             if (this.deltaY < -4.0) {
                 if (other.name == "spring") {
                     other.name = "spring_used"
@@ -217,17 +216,28 @@ export default class PlayerEntity extends me.Sprite {
 
     spawnPlatform() {
 
+        let platforms = 0
+        me.game.world.getChildren().forEach(E => {
+            if (E.body?.collisionType === me.collision.types.WORLD_SHAPE)
+                platforms++
+        })
+
+        if (platforms > 20)
+            return
+
         let choose = me.Math.random(0, 6)
 
-        if(me.Math.random(0,50) == 30 && data.score > 150)  {
-            let choose = me.Math.random(1,4)
+        if (me.Math.random(0, 50) == 30 && data.score > 150) {
+            let choose = me.Math.random(1, 4)
             me.game.world.addChild(
-                    me.pool.pull("monster_" + choose,
-                        me.Math.random(0, me.game.viewport.width),
-                        -20
-                    ), 1);
+                me.pool.pull("monster_" + choose,
+                    me.Math.random(0, me.game.viewport.width),
+                    -20
+                ), 1);
 
-            if(!this.jetpacking && choose != 3) {
+
+
+            if (!this.jetpacking && choose != 3) {
                 me.audio.fade("monster", 0.5, 0.0, 2000)
                 me.audio.play("monster", false, undefined, 0.5)
             }
@@ -275,7 +285,7 @@ export default class PlayerEntity extends me.Sprite {
             case 5: {
                 let count = 0
                 me.game.world.getChildren().forEach(element => {
-                    if(element.name == "brown")
+                    if (element.name == "brown")
                         count++
                 });
 
@@ -286,8 +296,11 @@ export default class PlayerEntity extends me.Sprite {
                     ), 1);
 
             }
-                
+
                 break;
         }
+
+        if(platforms < 17)
+            this.spawnPlatform()
     }
 }; 

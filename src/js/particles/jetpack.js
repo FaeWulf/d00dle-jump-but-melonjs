@@ -8,7 +8,7 @@ class jetpackDummy extends me.Sprite {
             { image: "jetpack", width: 27, height: 72, framewidth: 27, frameheight: 72 }
         );
 
-        this.scale(0.4, 0.4)
+        this.scale(0.6, 0.6)
         this.rotate(me.Math.degToRad(me.Math.random(-25,25)))
 
         //hitbox
