@@ -10,7 +10,7 @@ export default class monster_2 extends me.Sprite {
 
         //hitbox
         this.body = new me.Body(this);
-        this.body.addShape(new me.Rect(0, 0, 40, 25));
+        this.body.addShape(new me.Rect(17, 8, 40, 25));
 
         this.body.vel.set(0,0)
         this.body.collisionType = me.collision.types.NPC_OBJECT;

@@ -1,4 +1,5 @@
 import * as me from 'melonjs/dist/melonjs.module.js';
+import jetpack from "../particles/jetpack"
 import data from "../data"
 
 export default class PlayerEntity extends me.Sprite {
@@ -66,6 +67,18 @@ export default class PlayerEntity extends me.Sprite {
             this.pos.x += this.movementSpeed * time / 1000;
             this.flipX(true)
         }
+
+        //remove jetpack effect
+        if(this.jetpacking && this.jump <= 0) {
+            me.audio.fade("jetpack", 1.0, 0.0, 1000)
+            let jetpackParticle = new jetpack(this.pos.x, this.pos.y)
+            me.game.world.addChild(jetpackParticle)
+
+            setTimeout(() => {
+                me.game.world.removeChild(jetpackParticle)
+            }, 5000);
+        }
+
 
         if (this.jump > 0){
             if(this.jetpacking)
@@ -154,7 +167,7 @@ export default class PlayerEntity extends me.Sprite {
 
         if (other.body.collisionType == me.collision.types.NPC_OBJECT && !this.jetpacking) { 
             this.stun = true
-            me.audio.play("stun")
+            me.audio.play("stun", false, undefined, 0.5)
             this.setCurrentAnimation("stun")
             return false
         }
@@ -177,7 +190,6 @@ export default class PlayerEntity extends me.Sprite {
         else
             if (other.body.collisionType == me.collision.types.WORLD_SHAPE) {
                 if (this.deltaY < -5.0) {
-
                     if (other.name == "brown" || other.name == "brown_break") {
                         other.name = "brown_break"
                         setTimeout(() => {
@@ -207,15 +219,18 @@ export default class PlayerEntity extends me.Sprite {
 
         let choose = me.Math.random(0, 6)
 
-        if(me.Math.random(0,15) == 14 && data.score > 150)  {
+        if(me.Math.random(0,50) == 30 && data.score > 150)  {
+            let choose = me.Math.random(1,4)
             me.game.world.addChild(
-                    me.pool.pull("monster_" + me.Math.random(1,4),
+                    me.pool.pull("monster_" + choose,
                         me.Math.random(0, me.game.viewport.width),
                         -20
                     ), 1);
 
-            if(!this.jetpacking)
-                me.audio.play("monster")
+            if(!this.jetpacking && choose != 3) {
+                me.audio.fade("monster", 0.5, 0.0, 2000)
+                me.audio.play("monster", false, undefined, 0.5)
+            }
         }
 
         switch (choose) {
@@ -257,12 +272,21 @@ export default class PlayerEntity extends me.Sprite {
                         me.Math.random(-10, 10)
                     ), 1);
                 break;
-            case 5:
+            case 5: {
+                let count = 0
+                me.game.world.getChildren().forEach(element => {
+                    if(element.name == "brown")
+                        count++
+                });
+
                 me.game.world.addChild(
-                    me.pool.pull("platform_b",
+                    me.pool.pull(count <= 5 ? "platform_b" : "platform_d",
                         me.Math.random(0, me.game.viewport.width),
                         me.Math.random(-10, 10)
                     ), 1);
+
+            }
+                
                 break;
         }
     }

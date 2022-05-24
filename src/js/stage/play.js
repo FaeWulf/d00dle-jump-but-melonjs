@@ -31,7 +31,7 @@ class PlayScreen extends me.Stage {
         ),2);
 
 
-        for(var i = 0; i < 15; i++)
+        for(var i = 0; i < 20; i++)
             me.game.world.addChild(
                 me.pool.pull("platform_d",
                 me.Math.random(0, me.game.viewport.width), 

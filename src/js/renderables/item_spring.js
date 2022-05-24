@@ -12,7 +12,7 @@ export default class platForm extends me.Sprite {
 
         // give the sprite a physics body so it can collide and stuff
         this.body = new me.Body(this);
-        this.body.addShape(new me.Rect(-3, -10, 30, 40));
+        this.body.addShape(new me.Rect(-5, -10, 50, 50));
 
         this.body.vel.set(0,0)
         this.body.collisionType = me.collision.types.COLLECTABLE_OBJECT;

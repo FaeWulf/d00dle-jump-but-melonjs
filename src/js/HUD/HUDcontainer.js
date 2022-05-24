@@ -44,9 +44,6 @@ export class ScoreItem extends me.Renderable {
             textBaseline: "top"
         });
 
-        // font alignment to right, bottom
-        // local copy of the global score
-
         this.score = -1;
     }
 

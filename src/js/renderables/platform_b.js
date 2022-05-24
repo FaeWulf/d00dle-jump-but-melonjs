@@ -36,6 +36,7 @@ export default class platForm_b extends me.Sprite {
         super.update(dt);
         if(this.name == "brown_break" && this.isCurrentAnimation("idle")) {
             this.setCurrentAnimation("break")
+            me.audio.play("break", false, undefined, 0.5)
         }
 
         return true;
