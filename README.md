@@ -1,18 +1,7 @@
-# melonJS ES6 Webpack Boilerplate
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/melonjs/es6-boilerplate/blob/master/LICENSE)
-
-A simple ES6 Webpack based boilerplate to create games with [melonJS](https://github.com/melonjs/melonJS), built with :
-- [melonJS 2](https://github.com/melonjs/melonJS)
-- [ECMAScript 6](http://es6-features.org) structure and semantic
-- [Webpack](https://webpack.js.org/guides)
-- [Webpack Dev Server](https://github.com/webpack/webpack-dev-server) plugin for local development
-- [Hot Reloading](https://webpack.js.org/concepts/hot-module-replacement) dev server
-- Basic Asset Build [management](https://webpack.js.org/plugins/copy-webpack-plugin/)
-- Minification and Transpiling to ES5 using [Babel](https://babeljs.io/docs/setup/#installation)
-- Favicon support using the [favicons Webpack Plugin](https://www.npmjs.com/package/favicons-webpack-plugin)
-- a [debug plugin](#Debug-plugin) to display stats on number of objects, memory usage, draw time, frame rate, etc...
-
+## Pics
+![main-menu](https://raw.githubusercontent.com/FaeWulf/d00dle-jump-but-melonjs/main/pics/unnamed%20(2).png)
+![ingame](https://raw.githubusercontent.com/FaeWulf/d00dle-jump-but-melonjs/main/pics/unnamed%20(1).png)
+![win](https://raw.githubusercontent.com/FaeWulf/d00dle-jump-but-melonjs/main/pics/unnamed%20(3).png)
 ## Prerequisites
 
 Ensure you have [Node.js](http://nodejs.org/) installed, then install all the build dependencies in the folder where you cloned the repository :
@@ -68,25 +57,6 @@ Debug plugin
 -------------------------------------------------------------------------------
 In development mode, the boilerplate will automatically register and instantiate the melonJS Debug Plugin
 ![debug-panel](https://user-images.githubusercontent.com/4033090/138006717-cf3165a4-a52d-4855-a7c7-16b2a09ed124.png)
-
-the Debug Panel is hidden by default and can be displayed using the "S" key, it will then provide the below information :
-* Amount of objects currently active in the current scene
-* Amount of draws operation
-* Amount of body shape (requires to enable the hitbox checkbox)
-* Amount of bounding box
-* Amount of sprites objects
-* Amount of objects currently inactive in the the object pool
-* Heap/memory usage
-* Frame update time (in ms)
-* Frame draw time (in ms)
-* Current fps rate vs target fps
-
-> Note: Heap information requires starting Chrome [with](http://www.chromium.org/developers/how-tos/run-chromium-with-flags) `--enable-precise-memory-info`
-
-Additionally, using the checkbox in the panel it is also possible to draw :
-* Shape and Bounding box for all objects
-* Current velocity vector
-* Quadtree spatial visualization
 
 
 Questions, need help ?
